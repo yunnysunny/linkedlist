@@ -31,7 +31,6 @@ public:
     bool isEmpty();//判断链表是否为空
     ListElement<T>* find(T x);//查找第一个值为x的节点,返回节点的地址,找不到返回NULL
     void remove(T x);//删除第一个值为x的节点
-    void removeTail();
     void insert(T x, ListElement<T>* p);//在p节点后插入值为x的节点
     void insertHead(T x);//在链表的头部插入节点
 };
@@ -53,9 +52,10 @@ LinkedList<T>::~LinkedList()
     ListElement<T>* node = headnode;//
     while (node != NULL)//遍历链表
     {        
-        ListElement<T>* next = node->next;
-        free(node);
-        node = NULL;
+        ListElement<T>* temp = node;
+        node = node->next;
+        delete(temp);
+        
     }
     lastnode = NULL;
     headnode = NULL;
@@ -181,14 +181,6 @@ void  LinkedList<T>::remove(T x)
         node = NULL;
     }
     length--;
-}
-
-template<class T>
-void  LinkedList<T>::removeTail() {
-    if (lastnode == NULL) {
-        return;
-    }
-
 }
 
 #endif

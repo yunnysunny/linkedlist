@@ -1,5 +1,7 @@
 #include <iostream>
 #include "LinkedList.h"
+#include "DoubleLink.h"
+#include "LRUList.h"
 
 using namespace std;
 
@@ -25,5 +27,27 @@ int main(int argc, char **argv)
         return 2;
     }
     cout << "check exist find success" << endl;
+
+    DoubleLink<int>* dlink = new DoubleLink<int>();
+    dlink->insert_first(1);
+    dlink->append_last(2);
+    dlink->append_last(3);
+    dlink->append_last(4);
+    DNode<int>* node = dlink->find_node(3);
+    if (node == NULL) {
+        cout << "double link find error" << endl;
+        return 3;
+    }
+    dlink->delete_last();
+    dlink->delete_first();
+    dlink->traversal();
+
+    LRUList<int>* lru = new LRUList<int>(3);
+    lru->addNewElement(1);
+    lru->addNewElement(2);
+    lru->addNewElement(3);
+    lru->addNewElement(4);
+    lru->addNewElement(5);
+    lru->traversal();
 	return 0;
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 14 for Windows Desktop
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "linkedlist", "src\linkedlist.vcxproj", "{261B5153-336C-4774-8D90-D2C1C57DC655}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "linkedlist", "include\linkedlist.vcxproj", "{261B5153-336C-4774-8D90-D2C1C57DC655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

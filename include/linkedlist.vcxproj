@@ -114,6 +114,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DoubleLink.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LRUList.h" />
   </ItemGroup>
