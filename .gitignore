@@ -5,6 +5,11 @@
 
 # file history
 .history/
+.vscode
+
+# node
+
+build/
 
 # User-specific files
 *.suo

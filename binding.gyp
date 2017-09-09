@@ -2,15 +2,14 @@
   'targets': [
     {
       # have to specify 'liblib' here since gyp will remove the first one :\
-      'target_name': 'mysql_bindings',
+      'target_name': 'native-linked-list',
       'sources': [
-        'src/mysql_bindings.cc',
-        'src/mysql_bindings_connection.cc',
-        'src/mysql_bindings_result.cc',
-        'src/mysql_bindings_statement.cc',
+        'node/addon.cc',
+        'node/NativeLRUList.cc'
       ],
       "include_dirs" : [
-        '<!(node -e "require(\'nan\')")'
+        '<!(node -e "require(\'nan\')")',
+        'include'
       ]
     }
   ]
