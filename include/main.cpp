@@ -43,11 +43,17 @@ int main(int argc, char **argv)
     dlink->traversal();
 
     LRUList<int>* lru = new LRUList<int>(3);
-    lru->addNewElement(1);
-    lru->addNewElement(2);
-    lru->addNewElement(3);
-    lru->addNewElement(4);
-    lru->addNewElement(5);
+    RemovedTail<int> result;
+    lru->addNewElement(1,result);
+    cout << "remove tail " << result.tailRemoved << endl;
+    lru->addNewElement(2, result);
+    cout << "remove tail " << result.tailRemoved << endl;
+    lru->addNewElement(3, result);
+    cout << "remove tail " << result.tailRemoved << endl;
+    lru->addNewElement(4, result);
+    cout << "remove tail " << result.tailRemoved << " " << result.value << endl;
+    lru->addNewElement(5, result);
+    cout << "remove tail " << result.tailRemoved << " " << result.value << endl;
     lru->traversal();
 	return 0;
 }

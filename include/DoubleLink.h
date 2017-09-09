@@ -44,9 +44,9 @@ public:
     int insert_first(T t);
     int append_last(T t);
 
-    int del(unsigned int index);
-    int delete_first();
-    int delete_last();
+    int del(unsigned int index,T* value=NULL);
+    int delete_first(T* value = NULL);
+    int delete_last(T* value = NULL);
 
 protected:
     unsigned int count;
@@ -243,7 +243,7 @@ int DoubleLink<T>::remove_node(DNode<T>* node) {
 
 // 删除index位置的节点
 template<class T>
-int DoubleLink<T>::del(unsigned int index)
+int DoubleLink<T>::del(unsigned int index,T* value=NULL)
 {
     if (index<0 || index >= count)
     {
@@ -251,6 +251,9 @@ int DoubleLink<T>::del(unsigned int index)
         return 1;
     }
     DNode<T>* pindex = get_node(index);
+    if (value != NULL) {
+        *value = pindex->value;
+    }
     remove_node(pindex);
     delete pindex;
     return 0;
@@ -258,16 +261,16 @@ int DoubleLink<T>::del(unsigned int index)
 
 // 删除第一个节点
 template<class T>
-int DoubleLink<T>::delete_first()
+int DoubleLink<T>::delete_first(T* value = NULL)
 {
-    return del(0);
+    return del(0,value);
 }
 
 // 删除最后一个节点
 template<class T>
-int DoubleLink<T>::delete_last()
+int DoubleLink<T>::delete_last(T* value = NULL)
 {
-    return del(count - 1);
+    return del(count - 1,value);
 }
 
 #endif
