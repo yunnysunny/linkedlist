@@ -4,7 +4,7 @@
   "description": "",
   "main": "node/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/",
     "install": "node-gyp rebuild"
   },
   "repository": {
@@ -20,5 +20,9 @@
   "homepage": "https://github.com/yunnysunny/linkedlist#readme",
   "dependencies": {
     "nan": "^2.7.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.0"
   }
 }
