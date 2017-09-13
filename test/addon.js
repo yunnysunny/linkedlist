@@ -1,4 +1,4 @@
-const LRUList = require('../build/Release/native-linked-list');
+const {LRUList} = require('../build/Release/native-linked-list');
 
 const list = new LRUList(3);
 

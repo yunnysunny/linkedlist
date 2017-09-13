@@ -5,7 +5,7 @@
       'target_name': 'native-linked-list',
       'sources': [
         'node/addon.cc',
-        'node/NativeLRUList.cc'
+        'node/NodeLRUList.cc'
       ],
       "include_dirs" : [
         '<!(node -e "require(\'nan\')")',

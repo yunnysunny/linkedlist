@@ -35,13 +35,13 @@ public:
     };
 };
 
-class NativeLRUList : public Nan::ObjectWrap {
+class NodeLRUList : public Nan::ObjectWrap {
 public:
-    static void Init(v8::Handle<v8::Object> module);
+    static void Init(v8::Local<v8::Object> exports);
     unsigned int maxLength;
 private:
-    explicit NativeLRUList(unsigned int maxLength=1024);
-    ~NativeLRUList();
+    explicit NodeLRUList(unsigned int maxLength=1024);
+    ~NodeLRUList();
 
     static NAN_METHOD(New);
     static NAN_METHOD(addOne);
