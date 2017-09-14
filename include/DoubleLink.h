@@ -32,7 +32,7 @@ public:
     ~DoubleLink();
 
     int size();
-    bool is_empty();
+    bool isEmpty();
 
     T get(unsigned int index);
     T getFirst();
@@ -120,7 +120,7 @@ int DoubleLink<T>::size()
 
 // 返回链表是否为空
 template<class T>
-bool DoubleLink<T>::is_empty()
+bool DoubleLink<T>::isEmpty()
 {
     return count == 0;
 }

@@ -13,11 +13,12 @@ NodeLRUList::~NodeLRUList() {
 void NodeLRUList::Init(v8::Local<v8::Object> exports) {
     // Prepare constructor template
     v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);//
-    tpl->SetClassName(Nan::New<v8::String>("LRUList").ToLocalChecked());//js中的类名为NodeLRUList
+    tpl->SetClassName(Nan::New<v8::String>("LRUList").ToLocalChecked());//js' class name is LRUList
     tpl->InstanceTemplate()->SetInternalFieldCount(1);//
 
     Nan::SetPrototypeMethod(tpl,"addOne",addOne);//
     Nan::SetPrototypeMethod(tpl,"size",size);//
+    Nan::SetPrototypeMethod(tpl,"get",get);
     
     constructor.Reset(tpl->GetFunction());
     exports->Set(Nan::New<v8::String>("LRUList").ToLocalChecked(), tpl->GetFunction());
@@ -25,13 +26,13 @@ void NodeLRUList::Init(v8::Local<v8::Object> exports) {
 
 NAN_METHOD(NodeLRUList::New) {
     if (info.IsConstructCall()) {
-        // 通过 `new LRUList(...)` 方式调用
+        // call by `new LRUList(...)` 
         unsigned int value = info[0]->IsUndefined() ? 0 : info[0]->NumberValue();
         NodeLRUList* obj = new NodeLRUList(value);
         obj->Wrap(info.This());
         info.GetReturnValue().Set(info.This());
     } else {
-        // 通过 `LRUList(...)` 方式调用, 转成使用构造函数方式调用
+        // call by  `LRUList(...)`, change to constructor mode
         const int argc = 1;
         v8::Local<v8::Value> argv[argc] = { info[0] };
         v8::Local<v8::Function> cons = Nan::New<v8::Function>(constructor);
@@ -67,4 +68,13 @@ NAN_METHOD(NodeLRUList::addOne) {
     Nan::AsyncQueueWorker(new ThreadWorker(callback,obj->list,stdstr));
 
     info.GetReturnValue().Set(Nan::Undefined());
+}
+
+NAN_METHOD(NodeLRUList::get) {
+    NodeLRUList* obj = ObjectWrap::Unwrap<NodeLRUList>(info.Holder());
+    unsigned int value = info[0]->IsUndefined() ? 0 : info[0]->NumberValue();
+
+    std::string str = obj->list->get(value);
+
+    info.GetReturnValue().Set(Nan::New<v8::String>(str).ToLocalChecked());
 }
