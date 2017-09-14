@@ -29,17 +29,17 @@ int main(int argc, char **argv)
     cout << "check exist find success" << endl;
 
     DoubleLink<int>* dlink = new DoubleLink<int>();
-    dlink->insert_first(1);
-    dlink->append_last(2);
-    dlink->append_last(3);
-    dlink->append_last(4);
-    DNode<int>* node = dlink->find_node(3);
+    dlink->insertFirst(1);
+    dlink->appendLast(2);
+    dlink->appendLast(3);
+    dlink->appendLast(4);
+    DNode<int>* node = dlink->findNode(3);
     if (node == NULL) {
         cout << "double link find error" << endl;
         return 3;
     }
-    dlink->delete_last();
-    dlink->delete_first();
+    dlink->deleteLast();
+    dlink->deleteFirst();
     dlink->traversal();
 
     LRUList<int>* lru = new LRUList<int>(3);

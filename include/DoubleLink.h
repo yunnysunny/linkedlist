@@ -1,4 +1,4 @@
-#ifndef DOUBLE_LINK_HXX
+ï»¿#ifndef DOUBLE_LINK_HXX
 #define DOUBLE_LINK_HXX
 
 #include <iostream>
@@ -35,43 +35,43 @@ public:
     bool is_empty();
 
     T get(unsigned int index);
-    T get_first();
-    T get_last();
-    DNode<T>* find_node(T t);
-    void traversal();//±éÀúÕû¸öÁ´±í²¢´òÓ¡
+    T getFirst();
+    T getLast();
+    DNode<T>* findNode(T t);
+    void traversal();//éå†æ•´ä¸ªé“¾è¡¨å¹¶æ‰“å°
 
     int insert(unsigned int index, T t);
-    int insert_first(T t);
-    int append_last(T t);
+    int insertFirst(T t);
+    int appendLast(T t);
 
     int del(unsigned int index,T* value=NULL);
-    int delete_first(T* value = NULL);
-    int delete_last(T* value = NULL);
+    int deleteFirst(T* value = NULL);
+    int deleteLast(T* value = NULL);
 
 protected:
     unsigned int count;
     DNode<T> *phead;
-    int remove_node(DNode<T>* node);
-    int insert_node_first(DNode<T>* node);
+    int removeNode(DNode<T>* node);
+    int insertNodeFirst(DNode<T>* node);
 private:
-    DNode<T> *get_node(unsigned int index);
+    DNode<T> *getNode(unsigned int index);
 };
 
 template<class T>
 DoubleLink<T>::DoubleLink() : count(0)
 {
-    // ´´½¨¡°±íÍ·¡±¡£×¢Òâ£º±íÍ·Ã»ÓĞ´æ´¢Êı¾İ£¡
+    // åˆ›å»ºâ€œè¡¨å¤´â€ã€‚æ³¨æ„ï¼šè¡¨å¤´æ²¡æœ‰å­˜å‚¨æ•°æ®ï¼
     phead = new DNode<T>();
     phead->prev = phead->next = phead;
-    // ÉèÖÃÁ´±í¼ÆÊıÎª0
+    // è®¾ç½®é“¾è¡¨è®¡æ•°ä¸º0
     //count = 0;
 }
 
-// Îö¹¹º¯Êı
+// ææ„å‡½æ•°
 template<class T>
 DoubleLink<T>::~DoubleLink()
 {
-    // É¾³ıËùÓĞµÄ½Úµã
+    // åˆ é™¤æ‰€æœ‰çš„èŠ‚ç‚¹
     DNode<T>* ptmp;
     DNode<T>* pnode = phead->next;
     while (pnode != phead)
@@ -81,13 +81,13 @@ DoubleLink<T>::~DoubleLink()
         delete ptmp;
     }
 
-    // É¾³ı"±íÍ·"
+    // åˆ é™¤"è¡¨å¤´"
     delete phead;
     phead = NULL;
 }
 
 template<class T>
-DNode<T>* DoubleLink<T>::find_node(T t) {
+DNode<T>* DoubleLink<T>::findNode(T t) {
     DNode<T>* pnode = phead->next;
     DNode<T>* findNode = NULL;
     while (pnode != phead) {
@@ -111,25 +111,25 @@ void DoubleLink<T>::traversal() {
     cout << endl;
 }
 
-// ·µ»Ø½ÚµãÊıÄ¿
+// è¿”å›èŠ‚ç‚¹æ•°ç›®
 template<class T>
 int DoubleLink<T>::size()
 {
     return count;
 }
 
-// ·µ»ØÁ´±íÊÇ·ñÎª¿Õ
+// è¿”å›é“¾è¡¨æ˜¯å¦ä¸ºç©º
 template<class T>
 bool DoubleLink<T>::is_empty()
 {
     return count == 0;
 }
 
-// »ñÈ¡µÚindexÎ»ÖÃµÄ½Úµã
+// è·å–ç¬¬indexä½ç½®çš„èŠ‚ç‚¹
 template<class T>
-DNode<T>* DoubleLink<T>::get_node(unsigned int index)
+DNode<T>* DoubleLink<T>::getNode(unsigned int index)
 {
-    // ÅĞ¶Ï²ÎÊıÓĞĞ§ĞÔ
+    // åˆ¤æ–­å‚æ•°æœ‰æ•ˆæ€§
     if (index<0 || index >= count)
     {
         cout << "get node failed! the index in out of bound!" << endl;
@@ -142,22 +142,22 @@ DNode<T>* DoubleLink<T>::get_node(unsigned int index)
         return phead->prev;
     }
 
-    // ÔÚÇ°°ë²¿·Ö£¬ÕıÏò²éÕÒ
+    // åœ¨å‰åŠéƒ¨åˆ†ï¼Œæ­£å‘æŸ¥æ‰¾
     if (index <= count / 2)
     {
         unsigned int i = 0;
         DNode<T>* pindex = phead->next;
-        while (i++ < index) {//i == index-1Ê±Ñ­»·½áÊø
+        while (i++ < index) {//i == index-1æ—¶å¾ªç¯ç»“æŸ
             pindex = pindex->next;
         }
 
         return pindex;
     }
 
-    // ÔÚºó°ë²¿·Ö£¬·´Ïò²éÕÒ
+    // åœ¨ååŠéƒ¨åˆ†ï¼Œåå‘æŸ¥æ‰¾
     int j = 0;
     int rindex = count - index - 1;
-    DNode<T>* prindex = phead->prev;//Î²½Úµã
+    DNode<T>* prindex = phead->prev;//å°¾èŠ‚ç‚¹
     while (j++ < rindex) {
         prindex = prindex->prev;
     }
@@ -165,35 +165,35 @@ DNode<T>* DoubleLink<T>::get_node(unsigned int index)
     return prindex;
 }
 
-// »ñÈ¡µÚindexÎ»ÖÃµÄ½ÚµãµÄÖµ
+// è·å–ç¬¬indexä½ç½®çš„èŠ‚ç‚¹çš„å€¼
 template<class T>
 T DoubleLink<T>::get(unsigned int index)
 {
-    return get_node(index)->value;
+    return getNode(index)->value;
 }
 
-// »ñÈ¡µÚ1¸ö½ÚµãµÄÖµ
+// è·å–ç¬¬1ä¸ªèŠ‚ç‚¹çš„å€¼
 template<class T>
-T DoubleLink<T>::get_first()
+T DoubleLink<T>::getFirst()
 {
-    return get_node(0)->value;
+    return getNode(0)->value;
 }
 
-// »ñÈ¡×îºóÒ»¸ö½ÚµãµÄÖµ
+// è·å–æœ€åä¸€ä¸ªèŠ‚ç‚¹çš„å€¼
 template<class T>
-T DoubleLink<T>::get_last()
+T DoubleLink<T>::getLast()
 {
-    return get_node(count - 1)->value;
+    return getNode(count - 1)->value;
 }
 
-// ½«½Úµã²åÈëµ½µÚindexÎ»ÖÃÖ®Ç°
+// å°†èŠ‚ç‚¹æ’å…¥åˆ°ç¬¬indexä½ç½®ä¹‹å‰
 template<class T>
 int DoubleLink<T>::insert(unsigned int index, T t)
 {
     if (index == 0)
-        return insert_first(t);
+        return insertFirst(t);
 
-    DNode<T>* pindex = get_node(index);
+    DNode<T>* pindex = getNode(index);
     DNode<T>* pnode = new DNode<T>(t, pindex->prev, pindex);
     pindex->prev->next = pnode;
     pindex->prev = pnode;
@@ -203,26 +203,26 @@ int DoubleLink<T>::insert(unsigned int index, T t)
 }
 
 template<class T>
-int DoubleLink<T>::insert_node_first(DNode<T>* pnode) {
+int DoubleLink<T>::insertNodeFirst(DNode<T>* pnode) {
     phead->next->prev = pnode;
     phead->next = pnode;
     return 0;
 }
 
-// ½«½Úµã²åÈëµÚÒ»¸ö½Úµã´¦¡£
+// å°†èŠ‚ç‚¹æ’å…¥ç¬¬ä¸€ä¸ªèŠ‚ç‚¹å¤„ã€‚
 template<class T>
-int DoubleLink<T>::insert_first(T t)
+int DoubleLink<T>::insertFirst(T t)
 {
     DNode<T>* pnode = new DNode<T>(t, phead, phead->next);
-    insert_node_first(pnode);
+    insertNodeFirst(pnode);
     count++;
 
     return 0;
 }
 
-// ½«½Úµã×·¼Óµ½Á´±íµÄÄ©Î²
+// å°†èŠ‚ç‚¹è¿½åŠ åˆ°é“¾è¡¨çš„æœ«å°¾
 template<class T>
-int DoubleLink<T>::append_last(T t)
+int DoubleLink<T>::appendLast(T t)
 {
     DNode<T>* pnode = new DNode<T>(t, phead->prev, phead);
     phead->prev->next = pnode;
@@ -232,16 +232,16 @@ int DoubleLink<T>::append_last(T t)
     return 0;
 }
 
-// É¾³ı½Úµã
+// åˆ é™¤èŠ‚ç‚¹
 template<class T>
-int DoubleLink<T>::remove_node(DNode<T>* node) {
+int DoubleLink<T>::removeNode(DNode<T>* node) {
     node->next->prev = node->prev;
     node->prev->next = node->next;
     count--;
     return 0;
 }
 
-// É¾³ıindexÎ»ÖÃµÄ½Úµã
+// åˆ é™¤indexä½ç½®çš„èŠ‚ç‚¹
 template<class T>
 int DoubleLink<T>::del(unsigned int index,T* value=NULL)
 {
@@ -250,25 +250,25 @@ int DoubleLink<T>::del(unsigned int index,T* value=NULL)
         cout << "get node failed! the index in out of bound!" << endl;
         return 1;
     }
-    DNode<T>* pindex = get_node(index);
+    DNode<T>* pindex = getNode(index);
     if (value != NULL) {
         *value = pindex->value;
     }
-    remove_node(pindex);
+    removeNode(pindex);
     delete pindex;
     return 0;
 }
 
-// É¾³ıµÚÒ»¸ö½Úµã
+// åˆ é™¤ç¬¬ä¸€ä¸ªèŠ‚ç‚¹
 template<class T>
-int DoubleLink<T>::delete_first(T* value = NULL)
+int DoubleLink<T>::deleteFirst(T* value = NULL)
 {
     return del(0,value);
 }
 
-// É¾³ı×îºóÒ»¸ö½Úµã
+// åˆ é™¤æœ€åä¸€ä¸ªèŠ‚ç‚¹
 template<class T>
-int DoubleLink<T>::delete_last(T* value = NULL)
+int DoubleLink<T>::deleteLast(T* value = NULL)
 {
     return del(count - 1,value);
 }
