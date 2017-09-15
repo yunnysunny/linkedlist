@@ -14,8 +14,6 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
-before_install:
-  - npm run install
 cache:
   directories:
     - "node_modules"
