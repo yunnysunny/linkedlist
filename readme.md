@@ -1,7 +1,7 @@
 # linked list
 
 [![NPM version](https://img.shields.io/npm/v/native-linked-list.svg?style=flat-square)](https://npmjs.com/package/native-linked-list)
-[![Build status](https://travis-ci.org/yunnysunny/native-linked-list.svg?branch=master)](https://travis-ci.org/yunnysunny/native-linked-list)
+[![Build status](https://travis-ci.org/yunnysunny/linkedlist.svg?branch=master)](https://travis-ci.org/yunnysunny/linkedlist)
 
 A library supports `single linked list` `double linked list` and `lru list`.
 
