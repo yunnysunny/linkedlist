@@ -31,7 +31,7 @@ class NodeLRUList {
     /**
      * Add element to lru list, when its size is equal `count`, the tail will be removed.
      * 
-     * @param {String} key 
+     * @param {String} The element you want to add.
      * @param {AddElementToLRUListCallback} callback 
      * @memberof NodeLRUList
      */

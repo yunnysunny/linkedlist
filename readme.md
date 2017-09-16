@@ -75,7 +75,7 @@ See the [api](doc/cppapi.md) document.
 
 ## Node addon
 
-A node wrapper is supplied, only support lru list now. See its [api](doc/jsapi.md).
+A node wrapper is supplied, only supports lru list now. See its [api](doc/jsapi.md).
 
 
 ## License
