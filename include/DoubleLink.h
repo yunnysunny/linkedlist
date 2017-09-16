@@ -44,15 +44,20 @@ public:
     int insertFirst(T t);
     int appendLast(T t);
 
-    int del(unsigned int index,T* value=NULL);
-    int deleteFirst(T* value = NULL);
-    int deleteLast(T* value = NULL);
+    int del(unsigned int index,T* value);
+    int del(unsigned int index);
+    int deleteFirst(T* value);
+    int deleteFirst();
+    int deleteLast(T* value);
+    int deleteLast();
 
 protected:
     unsigned int count;
     DNode<T> *phead;
     int removeNode(DNode<T>* node);
+    //int removeNode();
     int insertNodeFirst(DNode<T>* node);
+    //int insertNodeFirst();
 private:
     DNode<T> *getNode(unsigned int index);
 };
@@ -243,7 +248,7 @@ int DoubleLink<T>::removeNode(DNode<T>* node) {
 
 // 删除index位置的节点
 template<class T>
-int DoubleLink<T>::del(unsigned int index,T* value=NULL)
+int DoubleLink<T>::del(unsigned int index,T* value)
 {
     if (index<0 || index >= count)
     {
@@ -259,18 +264,38 @@ int DoubleLink<T>::del(unsigned int index,T* value=NULL)
     return 0;
 }
 
+// 删除index位置的节点
+template<class T>
+int DoubleLink<T>::del(unsigned int index)
+{
+    return del(index, NULL);
+}
+
 // 删除第一个节点
 template<class T>
-int DoubleLink<T>::deleteFirst(T* value = NULL)
+int DoubleLink<T>::deleteFirst(T* value)
 {
     return del(0,value);
 }
 
+// 删除第一个节点
+template<class T>
+int DoubleLink<T>::deleteFirst()
+{
+    return del(0, NULL);
+}
+
 // 删除最后一个节点
 template<class T>
-int DoubleLink<T>::deleteLast(T* value = NULL)
+int DoubleLink<T>::deleteLast(T* value)
 {
     return del(count - 1,value);
+}
+
+template<class T>
+int DoubleLink<T>::deleteLast()
+{
+    return del(count - 1, NULL);
 }
 
 #endif

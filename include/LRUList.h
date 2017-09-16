@@ -30,17 +30,17 @@ LRUList<T>::LRUList(unsigned int count) {
 }
 template<class T>
 void LRUList<T>::addNewElement(T e,RemovedTail<T> &remvedTail) {
-    DNode<T>* node = findNode(e);
+    DNode<T>* node = this->findNode(e);
     if (node != NULL) {
-        removeNode(node);
-        insertNodeFirst(node);
+        this->removeNode(node);
+        this->insertNodeFirst(node);
     } else {
         if (this->count < this->maxCount) {
-            insertFirst(e);
+            this->insertFirst(e);
         } else {
             remvedTail.tailRemoved = true;
-            deleteLast(&remvedTail.value);
-            insertFirst(e);
+            this->deleteLast(&remvedTail.value);
+            this->insertFirst(e);
         }
     }
 }
