@@ -1,4 +1,13 @@
-/// @cond TEST
+# linked list
+
+[![NPM version](https://img.shields.io/npm/v/native-linked-list.svg?style=flat-square)](https://npmjs.com/package/native-linked-list)
+[![Build status](https://travis-ci.org/yunnysunny/native-linked-list.svg?branch=master)](https://travis-ci.org/yunnysunny/native-linked-list)
+
+A library supports `single linked list` `double linked list` and `lru list`.
+
+## How to use
+
+```c++
 #include <iostream>
 #include "LinkedList.h"
 #include "DoubleLink.h"
@@ -58,4 +67,17 @@ int main(int argc, char **argv)
     lru->traversal();
 	return 0;
 }
-/// @endcond
+```
+
+## API
+
+See the [api](doc/cppapi.md) document.
+
+## Node addon
+
+A node wrapper is supplied, only support lru list now. See its [api](doc/jsapi.md).
+
+
+## License
+
+[MIT](LICENSE)

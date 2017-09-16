@@ -7,10 +7,10 @@ template<class T>
 class ListElement
 {
 public:
-    ListElement() { next = NULL; }//初始化
+    ListElement() { next = NULL; }//
     ListElement(T x) { data = x; next = NULL; }
-    T data;//值
-    ListElement* next;//指向下一个节点的指针
+    T data;//
+    ListElement* next;//the pointer point to next element
 };
 
 template<class T>
@@ -18,12 +18,11 @@ class LinkedList
 {
 private:
     unsigned int length;
-    //ListElement<T>* node;//临时节点
-    ListElement<T>* lastnode;//头结点
-    ListElement<T>* headnode;//尾节点
+    ListElement<T>* lastnode;//last node
+    ListElement<T>* headnode;//head node
     bool firstInit(ListElement<T>* node);
 public:
-    LinkedList();//初始化
+    LinkedList();//
     ~LinkedList();
     unsigned int size();//链表元素的个数
     void insertTail(T x);//表尾添加元素
@@ -36,7 +35,9 @@ public:
 };
 
 /////////////////////////////////////////
-
+/**
+* The constructor
+*/
 template<class T>
 LinkedList<T>::LinkedList()
 {
@@ -45,7 +46,9 @@ LinkedList<T>::LinkedList()
     headnode = NULL;
     length = 0;
 }
-
+/**
+* The destructor
+*/
 template<class T>
 LinkedList<T>::~LinkedList()
 {
@@ -61,16 +64,21 @@ LinkedList<T>::~LinkedList()
     headnode = NULL;
     length = 0;
 }
-
+/**
+* Get the size of current list.
+*/
 template<class T>
 unsigned int  LinkedList<T>::size() {
     return length;
 }
 
+/**
+* Check whether current list is empty, when empty init it. 
+*/
 template<class T>
 bool LinkedList<T>::firstInit(ListElement<T>* node) {
     bool isFistInit = false;
-    if (isEmpty())//如果头结点为空则链表为空,node既为头结点,又是尾节点
+    if (isEmpty())//When empty, both the head node and last node will point to `node`
     {
         headnode = node;
         lastnode = node;
@@ -79,32 +87,42 @@ bool LinkedList<T>::firstInit(ListElement<T>* node) {
     return isFistInit;
 }
 
+/**
+* Create a new node and insert it to tail.
+*/
 template<class T>
-void  LinkedList<T>::insertTail(T x)//尾插入
+void  LinkedList<T>::insertTail(T x)//
 {
-    ListElement<T>* node = new ListElement<T>();//申请一个新的节点
-    node->data = x;//新节点赋值为x
+    ListElement<T>* node = new ListElement<T>();//
+    node->data = x;//
     if (!firstInit(node)) {
-        lastnode->next = node;//node既为尾节点的下一个节点
-        lastnode = node;//node变成了尾节点,把尾节点赋值为node
+        lastnode->next = node;//append to last
+        lastnode = node;//node is now the last
     }
-    ++length;//元素个数+1
+    ++length;//
 }
 
+/**
+ * Create a node and insert it to the next of `p`.
+ */
 template<class T>
 void  LinkedList<T>::insert(T x, ListElement<T>* p)
 {
     if (p == NULL) return;
     ListElement<T>* node = new ListElement<T>();//申请一个新的空间
-    node->data = x;//如图5
+    node->data = x;//
     node->next = p->next;
     p->next = node;
-    if (node->next == NULL) ｛//如果node为尾节点
+    if (node->next == NULL) ｛//This is none node after `node`
         lastnode = node;
     ｝
     ++length;
 
 }
+
+/**
+ * Create a new node and insert it to the head
+ */
 template<class T>
 void  LinkedList<T>::insertHead(T x)
 {
@@ -117,11 +135,14 @@ void  LinkedList<T>::insertHead(T x)
     ++length;
 }
 
+/**
+ * Traverse and print the nodes
+ */
 template<class T>
 void  LinkedList<T>::traversal()
 {
-    ListElement<T>* node = headnode;//用临时节点指向头结点
-    while (node != NULL)//遍历链表并输出
+    ListElement<T>* node = headnode;//
+    while (node != NULL)//
     {
         cout << node->data << ends;
         node = node->next;
@@ -129,55 +150,63 @@ void  LinkedList<T>::traversal()
     cout << endl;
 }
 
+/**
+ * Check whether the list is empty.
+ */
 template<class T>
 bool  LinkedList<T>::isEmpty()
 {
     return headnode == NULL;
 }
-
+/**
+ * Find the first one which its data is `x`.
+ */
 template<class T>
 ListElement<T>* LinkedList<T>::find(T x)
 {
-    ListElement<T>* node = headnode;//用临时节点指向头结点
-    while (node != NULL&&node->data != x)//遍历链表,遇到值相同的节点跳出
+    ListElement<T>* node = headnode;//
+    while (node != NULL&&node->data != x)//
     {
         node = node->next;
     }
-    return node;//返回找到的节点的地址,如果没有找到则返回NULL
+    return node;//return a point of node ,or NULL if none find
 }
 
+/**
+ * Remove the first one which its data is `x`.
+ */
 template<class T>
 void  LinkedList<T>::remove(T x)
 {
-    ListElement<T>* temp = headnode;//申请一个临时节点指向头节点
-    if (temp == NULL) return;//如果头节点为空,则该链表无元素,直接返回
-    if (temp->data == x)//如果头节点的值为要删除的值,则删除头节点
+    ListElement<T>* temp = headnode;//the temp node point to head
+    if (temp == NULL) return;//return if list is empty
+    if (temp->data == x)//if the head's data is x, delete the head node
     {
-        headnode = temp->next;//把头节点指向头节点的下一个节点
-        if (temp->next == NULL) lastnode = NULL;//如果链表中只有一个节点,删除之后就没有节点了,把尾节点置为空
-        delete(temp);//删除头节点
+        headnode = temp->next;//move the head to the next
+        if (temp->next == NULL) lastnode = NULL;//if the next is empty, the last node will also be null
+        delete(temp);//delete head
         return;
     }
-    while (temp->next != NULL&&temp->next->data != x)//遍历链表找到第一个值与x相等的节点,temp表示这个节点的上一个节点
+    while (temp->next != NULL/*the next is not empty*/&&temp->next->data != x/*the next's data is not x*/)
     {
         temp = temp->next;
-    }//循环结束的条件是temp->next == NULL 或者 temp->next->data == x
-    if (temp->next == NULL) {//说明temp是尾节点
-        return;//则证明没有找到则返回
+    }//when temp->next == NULL or temp->next->data == x ,the loop end
+    if (temp->next == NULL) {//The temp is the last now
+        return;//none found
     }
-    //找到元素了，且该元素为temp->next
-    if (temp->next == lastnode)//如果找到的是尾节点
+    //find one ,it is temp->next
+    if (temp->next == lastnode)//The one we found is the tail
     {
-        lastnode = temp;//把尾节点指向他的上一个节点
-        delete(temp->next);//删除尾节点
+        lastnode = temp;//move last node to temp
+        delete(temp->next);//delete the find one
         temp->next = NULL;
     }
-    else//如果不是尾节点
+    else//The one we found is not the tail
     {
-        ListElement<T>* node = temp->next;//用临时节点node指向要删除的节点
-                                            // 给temp->next重新赋值
-        temp->next = node->next;//要删除的节点的上一个节点指向要删除节点的下一个节点
-        delete(node);//删除节点
+        ListElement<T>* node = temp->next;//a pointer points to the found one
+                                            //
+        temp->next = node->next;//temp's next now point the found one's next
+        delete(node);//delete the found one
         node = NULL;
     }
     length--;

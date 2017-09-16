@@ -3,7 +3,9 @@
 
 #include <iostream>
 using namespace std;
-
+/**
+* The class of DNode, used it for DoubleLink
+*/
 template<class T>
 struct DNode
 {
@@ -20,9 +22,14 @@ public:
     }
 };
 /**
-|----|--->|----|
-|tail|    |head|
-|----|<---|----|
+* The class of DoubleLink\n
+*\n
+*    ```
+*     |----|--->|----|
+*     |tail|    |head|
+*     |----|<---|----|
+*   ```
+*\n
 */
 template<class T>
 class DoubleLink
@@ -38,7 +45,7 @@ public:
     T getFirst();
     T getLast();
     DNode<T>* findNode(T t);
-    void traversal();//遍历整个链表并打印
+    void traversal();//traverse and print
 
     int insert(unsigned int index, T t);
     int insertFirst(T t);
@@ -61,22 +68,24 @@ protected:
 private:
     DNode<T> *getNode(unsigned int index);
 };
-
+/**
+* The constructor
+*/
 template<class T>
 DoubleLink<T>::DoubleLink() : count(0)
 {
-    // 创建“表头”。注意：表头没有存储数据！
+    // create the head, attention: this is no data in head.
     phead = new DNode<T>();
     phead->prev = phead->next = phead;
-    // 设置链表计数为0
+    // 
     //count = 0;
 }
 
-// 析构函数
+// the destructor
 template<class T>
 DoubleLink<T>::~DoubleLink()
 {
-    // 删除所有的节点
+    // delete all nodes
     DNode<T>* ptmp;
     DNode<T>* pnode = phead->next;
     while (pnode != phead)
@@ -86,11 +95,13 @@ DoubleLink<T>::~DoubleLink()
         delete ptmp;
     }
 
-    // 删除"表头"
+    // delete the head
     delete phead;
     phead = NULL;
 }
-
+/**
+* Find a node by a T element
+*/
 template<class T>
 DNode<T>* DoubleLink<T>::findNode(T t) {
     DNode<T>* pnode = phead->next;
@@ -104,7 +115,9 @@ DNode<T>* DoubleLink<T>::findNode(T t) {
     }
     return findNode;
 }
-
+/**
+* traverse all the nodes
+*/
 template<class T>
 void DoubleLink<T>::traversal() {
     DNode<T>* pnode = phead->next;
@@ -116,25 +129,31 @@ void DoubleLink<T>::traversal() {
     cout << endl;
 }
 
-// 返回节点数目
+/**
+* Get the count of nodes
+*/
 template<class T>
 int DoubleLink<T>::size()
 {
     return count;
 }
 
-// 返回链表是否为空
+/**
+* Check if the list is empty.
+*/
 template<class T>
 bool DoubleLink<T>::isEmpty()
 {
     return count == 0;
 }
 
-// 获取第index位置的节点
+/**
+* Get the node by index.
+*/
 template<class T>
 DNode<T>* DoubleLink<T>::getNode(unsigned int index)
 {
-    // 判断参数有效性
+    // check if the paramerter is valid
     if (index<0 || index >= count)
     {
         cout << "get node failed! the index in out of bound!" << endl;
@@ -147,22 +166,22 @@ DNode<T>* DoubleLink<T>::getNode(unsigned int index)
         return phead->prev;
     }
 
-    // 在前半部分，正向查找
+    // top half, search from begin
     if (index <= count / 2)
     {
         unsigned int i = 0;
         DNode<T>* pindex = phead->next;
-        while (i++ < index) {//i == index-1时循环结束
+        while (i++ < index) {//i == index-1, end
             pindex = pindex->next;
         }
 
         return pindex;
     }
 
-    // 在后半部分，反向查找
+    // bottom half, search from tail
     int j = 0;
     int rindex = count - index - 1;
-    DNode<T>* prindex = phead->prev;//尾节点
+    DNode<T>* prindex = phead->prev;//the tail node
     while (j++ < rindex) {
         prindex = prindex->prev;
     }
@@ -170,28 +189,36 @@ DNode<T>* DoubleLink<T>::getNode(unsigned int index)
     return prindex;
 }
 
-// 获取第index位置的节点的值
+/**
+* Get the value of the `index` node
+*/
 template<class T>
 T DoubleLink<T>::get(unsigned int index)
 {
     return getNode(index)->value;
 }
 
-// 获取第1个节点的值
+/**
+* Get first node's value
+*/
 template<class T>
 T DoubleLink<T>::getFirst()
 {
     return getNode(0)->value;
 }
 
-// 获取最后一个节点的值
+/**
+* Get the last node's value
+*/
 template<class T>
 T DoubleLink<T>::getLast()
 {
     return getNode(count - 1)->value;
 }
 
-// 将节点插入到第index位置之前
+/**
+* Insert the element to the front of index's node.
+*/ 
 template<class T>
 int DoubleLink<T>::insert(unsigned int index, T t)
 {
@@ -206,7 +233,9 @@ int DoubleLink<T>::insert(unsigned int index, T t)
 
     return 0;
 }
-
+/**
+* Insert the node to the first.
+*/
 template<class T>
 int DoubleLink<T>::insertNodeFirst(DNode<T>* pnode) {
     phead->next->prev = pnode;
@@ -214,7 +243,9 @@ int DoubleLink<T>::insertNodeFirst(DNode<T>* pnode) {
     return 0;
 }
 
-// 将节点插入第一个节点处。
+/**
+* Create a node and insert it to the first
+*/
 template<class T>
 int DoubleLink<T>::insertFirst(T t)
 {
@@ -225,7 +256,9 @@ int DoubleLink<T>::insertFirst(T t)
     return 0;
 }
 
-// 将节点追加到链表的末尾
+/**
+* Create a node and insert it to the tail
+*/ 
 template<class T>
 int DoubleLink<T>::appendLast(T t)
 {
@@ -237,7 +270,9 @@ int DoubleLink<T>::appendLast(T t)
     return 0;
 }
 
-// 删除节点
+/**
+* Remove an exist node
+*/ 
 template<class T>
 int DoubleLink<T>::removeNode(DNode<T>* node) {
     node->next->prev = node->prev;
@@ -246,7 +281,9 @@ int DoubleLink<T>::removeNode(DNode<T>* node) {
     return 0;
 }
 
-// 删除index位置的节点
+/**
+* Remove the index's node, and copy the value to the porint of `value`.
+*/ 
 template<class T>
 int DoubleLink<T>::del(unsigned int index,T* value)
 {
@@ -264,34 +301,45 @@ int DoubleLink<T>::del(unsigned int index,T* value)
     return 0;
 }
 
-// 删除index位置的节点
+/**
+* Remove the index's node.
+*/ 
 template<class T>
 int DoubleLink<T>::del(unsigned int index)
 {
     return del(index, NULL);
 }
 
-// 删除第一个节点
+/**
+* Remove the first node, and save its value to `value`.
+*/
 template<class T>
 int DoubleLink<T>::deleteFirst(T* value)
 {
     return del(0,value);
 }
 
-// 删除第一个节点
+/**
+* Remove the first node.
+*/
 template<class T>
 int DoubleLink<T>::deleteFirst()
 {
     return del(0, NULL);
 }
 
-// 删除最后一个节点
+/**
+* Remove the last node, and save its value to `value`.
+*/ 
 template<class T>
 int DoubleLink<T>::deleteLast(T* value)
 {
     return del(count - 1,value);
 }
 
+/**
+* Remove the last node.
+*/
 template<class T>
 int DoubleLink<T>::deleteLast()
 {

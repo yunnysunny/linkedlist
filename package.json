@@ -5,6 +5,7 @@
   "main": "node/index.js",
   "scripts": {
     "test": "mocha test/",
+    "doc": "doxygen && moxygen --anchors --output doc/cppapi.md doc/xml && jsdoc2md node/doc.js > doc/jsapi.md",
     "install": "node-gyp rebuild"
   },
   "repository": {
