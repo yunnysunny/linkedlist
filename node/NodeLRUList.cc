@@ -19,6 +19,7 @@ void NodeLRUList::Init(v8::Local<v8::Object> exports) {
     Nan::SetPrototypeMethod(tpl,"addOne",addOne);//
     Nan::SetPrototypeMethod(tpl,"size",size);//
     Nan::SetPrototypeMethod(tpl,"get",get);
+    Nan::SetPrototypeMethod(tpl,"remove",remove);
     
     constructor.Reset(tpl->GetFunction());
     exports->Set(Nan::New<v8::String>("LRUList").ToLocalChecked(), tpl->GetFunction());
@@ -65,7 +66,7 @@ NAN_METHOD(NodeLRUList::addOne) {
     Nan::Utf8String param1(info[0]->ToString());
     std::string stdstr = std::string(*param1);
     
-    Nan::AsyncQueueWorker(new ThreadWorker(callback,obj->list,stdstr));
+    Nan::AsyncQueueWorker(new AddOneWorker(callback,obj->list,stdstr));
 
     info.GetReturnValue().Set(Nan::Undefined());
 }
@@ -77,4 +78,29 @@ NAN_METHOD(NodeLRUList::get) {
     std::string str = obj->list->get(value);
 
     info.GetReturnValue().Set(Nan::New<v8::String>(str).ToLocalChecked());
+}
+
+NAN_METHOD(NodeLRUList::remove) {
+    NodeLRUList* obj = ObjectWrap::Unwrap<NodeLRUList>(info.Holder());
+    if (info[0]->IsUndefined()) {
+        Nan::ThrowError("The value can not be empty");
+        return info.GetReturnValue().Set(Nan::Undefined());
+    }
+    if (info[0]->IsNumber()) {
+    } else if (info[0]->IsString()) {
+    } else {
+        Nan::ThrowError("The value must be a string or number");
+        return info.GetReturnValue().Set(Nan::Undefined());
+    }
+
+    Nan::Callback *callback = NULL;
+    if (!info[1]->IsUndefined()) {
+        callback = new Nan::Callback(info[1].As<v8::Function>());
+    }
+    Nan::Utf8String param1(info[0]->ToString());
+    std::string stdstr = std::string(*param1);
+    
+    Nan::AsyncQueueWorker(new RemoveWorker(callback,obj->list,stdstr));
+
+    info.GetReturnValue().Set(Nan::Undefined());
 }

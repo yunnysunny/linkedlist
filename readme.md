@@ -77,6 +77,47 @@ See the [api](doc/cppapi.md) document.
 
 A node wrapper is supplied, only supports lru list now. See its [api](doc/jsapi.md).
 
+### Install npm package
+
+```
+npm install native-linked-list --save
+```
+
+### Demo
+
+```javascript
+const {LRUList} = require('native-linked-list');
+const {expect} = require('chai');
+const list = new LRUList(3);
+list.addOne(1,function(tailRemoved,tail) {
+    expect(tailRemoved).to.equal(false);
+    expect(tail).to.equal(null);
+    expect(list.size()).to.equal(1);
+});
+list.addOne(2,function(tailRemoved,tail) {
+    expect(tailRemoved).to.equal(false);
+    expect(tail).to.equal(null);
+    expect(list.size()).to.equal(2);
+    expect(list.get(0)).to.equal('2');
+    expect(list.get(1)).to.equal('1');
+});
+list.addOne(3,function(tailRemoved,tail) {
+    expect(tailRemoved).to.equal(false);
+    expect(tail).to.equal(null);
+    expect(list.size()).to.equal(3);
+    expect(list.get(0)).to.equal('3');
+    expect(list.get(1)).to.equal('2');
+    expect(list.get(2)).to.equal('1');
+});
+list.addOne(4,function(tailRemoved,tail) {
+    expect(tailRemoved).to.equal(true);
+    expect(tail).to.equal('1');
+    expect(list.size()).to.equal(3);
+    expect(list.get(0)).to.equal('4');
+    expect(list.get(1)).to.equal('3');
+    expect(list.get(2)).to.equal('2');
+});
+```
 
 ## License
 

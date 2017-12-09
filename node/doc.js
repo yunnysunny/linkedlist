@@ -1,5 +1,6 @@
 /**
  * This file is only used for creating document.
+ * @module native-linked-list
  */
 
 /**
@@ -8,6 +9,12 @@
  * @param {Boolean} isTailRemoved
  * @param {String} removedTailValue
  */
+
+/**
+ * @function RemoveElementCallback
+ * @param {Number} removedCount
+ */
+
 
 /**
  * The class of NodeLRUList
@@ -36,6 +43,25 @@ class NodeLRUList {
      * @memberof NodeLRUList
      */
     addOne(key,callback) {
+
+    }
+    /**
+     * Remove an element by key.
+     * 
+     * @param {String} key 
+     * @param {RemoveElementCallback} callback 
+     * @memberof NodeLRUList
+     */
+    remove(key,callback) {}
+
+    /**
+     * Get a value by key.
+     * 
+     * @param {String} key 
+     * @return {String} value
+     * @memberof NodeLRUList
+     */
+    get(key) {
 
     }
 }

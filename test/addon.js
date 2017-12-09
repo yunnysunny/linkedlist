@@ -58,5 +58,15 @@ describe('native lru test# ',function() {
             done();
         });
     });
+
+    it('remove 5',function(done) {
+        list.remove(5,function(count) {
+            expect(count).to.equal(1);
+            expect(list.size()).to.equal(2);
+            expect(list.get(0)).to.equal('4');
+            expect(list.get(1)).to.equal('3');
+            done();
+        });
+    });
 });
 

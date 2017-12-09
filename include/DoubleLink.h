@@ -57,6 +57,7 @@ public:
     int deleteFirst();
     int deleteLast(T* value);
     int deleteLast();
+    int deleteByValue(T value);
 
 protected:
     unsigned int count;
@@ -344,6 +345,21 @@ template<class T>
 int DoubleLink<T>::deleteLast()
 {
     return del(count - 1, NULL);
+}
+
+/**
+* Remove the first node which has the  value of `value`.
+* It will return 1 if delete one, or return 0 if none of `value` node found.
+*/
+template<class T>
+int DoubleLink<T>::deleteByValue(T value)
+{
+    DNode<T>* node = this->findNode(value);
+    if (node != NULL) {
+        this->removeNode(node);
+        return 1;
+    }
+    return 0;
 }
 
 #endif

@@ -1,18 +1,18 @@
 #include <nan.h>
 #include "LRUList.h"
 
-class ThreadWorker : public Nan::AsyncWorker {
+class AddOneWorker : public Nan::AsyncWorker {
 private:
     LRUList<std::string>* list;
     std::string value;
     std::string removedValue;
     bool tailRemoved;
 public:
-    ThreadWorker(Nan::Callback *callback,LRUList<std::string>* list,std::string value)
+    AddOneWorker(Nan::Callback *callback,LRUList<std::string>* list,std::string value)
     : Nan::AsyncWorker(callback), list(list), value(value) {
         
     }
-    ~ThreadWorker() {}
+    ~AddOneWorker() {}
     void Execute() {
         RemovedTail<std::string> result;
         list->addNewElement(value,result);
@@ -45,6 +45,35 @@ public:
     };
 };
 
+class RemoveWorker : public Nan::AsyncWorker {
+private:
+    LRUList<std::string>* list;
+    std::string value;
+    int deleteCount;
+public:
+    RemoveWorker(Nan::Callback *callback,LRUList<std::string>* list,std::string value)
+    : Nan::AsyncWorker(callback), list(list), value(value) {
+        
+    }
+    ~RemoveWorker() {}
+    void Execute() {
+        this->deleteCount = list->deleteByValue(value);
+    }
+    void HandleOKCallback () {
+        Nan::HandleScope scope;
+        if (callback != NULL) {
+            v8::Local<v8::Value> argv[] = {
+                Nan::New<v8::Int32>(this->deleteCount)
+            };
+
+            callback->Call(1, argv);
+        }
+            
+    }
+        
+};
+
+
 class NodeLRUList : public Nan::ObjectWrap {
 public:
     static void Init(v8::Local<v8::Object> exports);
@@ -57,6 +86,7 @@ private:
     static NAN_METHOD(addOne);
     static NAN_METHOD(size);
     static NAN_METHOD(get);
+    static NAN_METHOD(remove);
     static Nan::Persistent<v8::Function> constructor;
     LRUList<std::string>* list;
     

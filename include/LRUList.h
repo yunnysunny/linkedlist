@@ -47,7 +47,7 @@ void LRUList<T>::addNewElement(T e,RemovedTail<T> &remvedTail) {
         this->removeNode(node);
         this->insertNodeFirst(node);
     } else {
-        if (this->count < this->maxCount) {
+        if ((this->count) < (this->maxCount)) {
             this->insertFirst(e);
         } else {
             remvedTail.tailRemoved = true;
