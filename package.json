@@ -4,7 +4,7 @@
   "description": "A library supports `single linked list` `double linked list` and `lru list`",
   "main": "node/index.js",
   "scripts": {
-    "test": "mocha test/",
+    "test": "mocha test/ --timeout 999999",
     "doc": "doxygen && moxygen --anchors --output doc/cppapi.md doc/xml && jsdoc2md node/doc.js > doc/jsapi.md",
     "install": "node-gyp rebuild"
   },
