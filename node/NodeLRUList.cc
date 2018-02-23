@@ -4,10 +4,12 @@ Nan::Persistent<v8::Function> NodeLRUList::constructor;
 
 NodeLRUList::NodeLRUList(unsigned int maxLength): maxLength(maxLength) {
     list = new LRUList<std::string>(maxLength);
+    uv_mutex_init(&lock);
 }
 
 NodeLRUList::~NodeLRUList() {
     delete list;
+    uv_mutex_destroy(&lock);
 }
 
 void NodeLRUList::Init(v8::Local<v8::Object> exports) {
@@ -66,7 +68,7 @@ NAN_METHOD(NodeLRUList::addOne) {
     Nan::Utf8String param1(info[0]->ToString());
     std::string stdstr = std::string(*param1);
     
-    Nan::AsyncQueueWorker(new AddOneWorker(callback,obj->list,stdstr));
+    Nan::AsyncQueueWorker(new AddOneWorker(callback,obj->list,stdstr, &(obj->lock)));
 
     info.GetReturnValue().Set(Nan::Undefined());
 }
@@ -100,7 +102,7 @@ NAN_METHOD(NodeLRUList::remove) {
     Nan::Utf8String param1(info[0]->ToString());
     std::string stdstr = std::string(*param1);
     
-    Nan::AsyncQueueWorker(new RemoveWorker(callback,obj->list,stdstr));
+    Nan::AsyncQueueWorker(new RemoveWorker(callback,obj->list,stdstr, &(obj->lock)));
 
     info.GetReturnValue().Set(Nan::Undefined());
 }

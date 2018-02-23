@@ -7,15 +7,20 @@ private:
     std::string value;
     std::string removedValue;
     bool tailRemoved;
+    uv_mutex_t *lockp;
 public:
-    AddOneWorker(Nan::Callback *callback,LRUList<std::string>* list,std::string value)
-    : Nan::AsyncWorker(callback), list(list), value(value) {
+    AddOneWorker(Nan::Callback *callback,LRUList<std::string>* list,std::string value,uv_mutex_t *lockp)
+    : Nan::AsyncWorker(callback), list(list), value(value),lockp(lockp) {
         
     }
     ~AddOneWorker() {}
     void Execute() {
         RemovedTail<std::string> result;
+
+        uv_mutex_lock(lockp);
         list->addNewElement(value,result);
+        uv_mutex_unlock(lockp);
+
         tailRemoved = result.tailRemoved;
         if (tailRemoved) {
             removedValue = result.value;
@@ -50,14 +55,17 @@ private:
     LRUList<std::string>* list;
     std::string value;
     int deleteCount;
+    uv_mutex_t *lockp;
 public:
-    RemoveWorker(Nan::Callback *callback,LRUList<std::string>* list,std::string value)
-    : Nan::AsyncWorker(callback), list(list), value(value) {
+    RemoveWorker(Nan::Callback *callback,LRUList<std::string>* list,std::string value,uv_mutex_t *lockp)
+    : Nan::AsyncWorker(callback), list(list), value(value), lockp(lockp) {
         
     }
     ~RemoveWorker() {}
     void Execute() {
+        uv_mutex_lock(lockp);
         this->deleteCount = list->deleteByValue(value);
+        uv_mutex_unlock(lockp);
     }
     void HandleOKCallback () {
         Nan::HandleScope scope;
@@ -89,5 +97,5 @@ private:
     static NAN_METHOD(remove);
     static Nan::Persistent<v8::Function> constructor;
     LRUList<std::string>* list;
-    
+    uv_mutex_t lock;
 };

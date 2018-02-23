@@ -71,11 +71,11 @@ int main(int argc, char **argv)
 
 ## API
 
-See the [api](doc/cppapi.md) document.
+See the online [api](doc/cppapi.md) document.
 
 ## Node addon
 
-A node wrapper is supplied, only supports lru list now. See its [api](doc/jsapi.md).
+A node wrapper is supplied, only supports lru list now. See its [api](https://doclets.io/yunnysunny/linkedlist/master).
 
 ### Install npm package
 

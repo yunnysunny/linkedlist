@@ -1,6 +1,6 @@
 {
   "name": "native-linked-list",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A library supports `single linked list` `double linked list` and `lru list`",
   "main": "node/index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "nan": "^2.7.0"
   },
   "devDependencies": {
+    "async": "^2.6.0",
     "chai": "^4.1.2",
     "mocha": "^3.5.0"
   }
