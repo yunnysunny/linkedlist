@@ -1,3 +1,7 @@
+## 0.3.1
+
+1. Fixed the support of node 10.
+
 ## 0.3.0
 
 1. Fixed the bug of unsafe thread operation.

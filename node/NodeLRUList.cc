@@ -24,7 +24,7 @@ void NodeLRUList::Init(v8::Local<v8::Object> exports) {
     Nan::SetPrototypeMethod(tpl,"remove",remove);
     
     constructor.Reset(tpl->GetFunction());
-    exports->Set(Nan::New<v8::String>("LRUList").ToLocalChecked(), tpl->GetFunction());
+    Nan::Set(exports, Nan::New<v8::String>("LRUList").ToLocalChecked(), tpl->GetFunction());
 }
 
 NAN_METHOD(NodeLRUList::New) {
@@ -39,7 +39,7 @@ NAN_METHOD(NodeLRUList::New) {
         const int argc = 1;
         v8::Local<v8::Value> argv[argc] = { info[0] };
         v8::Local<v8::Function> cons = Nan::New<v8::Function>(constructor);
-        info.GetReturnValue().Set(cons->NewInstance(argc, argv));
+        info.GetReturnValue().Set(Nan::NewInstance(cons, argc, argv).ToLocalChecked());
     }
 }
 
