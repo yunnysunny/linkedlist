@@ -3,8 +3,8 @@
 
 using namespace v8;
 
-void InitAll(Handle<Object> exports, Handle<Object> module) {
-    NodeLRUList::Init(exports);
+NAN_MODULE_INIT(InitAll) {
+    NodeLRUList::Init(target);
 }
 
 NODE_MODULE(lru, InitAll)

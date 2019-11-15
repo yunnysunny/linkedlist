@@ -23,14 +23,14 @@ void NodeLRUList::Init(v8::Local<v8::Object> exports) {
     Nan::SetPrototypeMethod(tpl,"get",get);
     Nan::SetPrototypeMethod(tpl,"remove",remove);
     
-    constructor.Reset(tpl->GetFunction());
-    Nan::Set(exports, Nan::New<v8::String>("LRUList").ToLocalChecked(), tpl->GetFunction());
+    constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
+    Nan::Set(exports, Nan::New<v8::String>("LRUList").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
 }
 
 NAN_METHOD(NodeLRUList::New) {
     if (info.IsConstructCall()) {
         // call by `new LRUList(...)` 
-        unsigned int value = info[0]->IsUndefined() ? 0 : info[0]->NumberValue();
+        unsigned int value = info[0]->IsUndefined() ? 0 : Nan::To<uint32_t>(info[0]).FromJust();
         NodeLRUList* obj = new NodeLRUList(value);
         obj->Wrap(info.This());
         info.GetReturnValue().Set(info.This());
@@ -65,17 +65,18 @@ NAN_METHOD(NodeLRUList::addOne) {
     if (!info[1]->IsUndefined()) {
         callback = new Nan::Callback(info[1].As<v8::Function>());
     }
-    Nan::Utf8String param1(info[0]->ToString());
-    std::string stdstr = std::string(*param1);
+    v8::Local<v8::String> v8_string = Nan::ToDetailString(info[0]).ToLocalChecked();
+    Nan::Utf8String nan_string(v8_string);
+    std::string cc_string(*nan_string);
     
-    Nan::AsyncQueueWorker(new AddOneWorker(callback,obj->list,stdstr, &(obj->lock)));
+    Nan::AsyncQueueWorker(new AddOneWorker(callback,obj->list,cc_string, &(obj->lock)));
 
     info.GetReturnValue().Set(Nan::Undefined());
 }
 
 NAN_METHOD(NodeLRUList::get) {
     NodeLRUList* obj = ObjectWrap::Unwrap<NodeLRUList>(info.Holder());
-    unsigned int value = info[0]->IsUndefined() ? 0 : info[0]->NumberValue();
+    unsigned int value = info[0]->IsUndefined() ? 0 :  Nan::To<uint32_t>(info[0]).FromJust();
 
     std::string str = obj->list->get(value);
 
@@ -99,10 +100,14 @@ NAN_METHOD(NodeLRUList::remove) {
     if (!info[1]->IsUndefined()) {
         callback = new Nan::Callback(info[1].As<v8::Function>());
     }
-    Nan::Utf8String param1(info[0]->ToString());
-    std::string stdstr = std::string(*param1);
+    v8::Local<v8::String> v8_string = Nan::ToDetailString(info[0]).ToLocalChecked();
+    Nan::Utf8String nan_string(v8_string);
+    std::string cc_string(*nan_string);
+    // Nan::Utf8String *param1 = new Nan::Utf8String( info[0]);
+    // std::string stdstr = std::string(param1);
+    // delete param1;
     
-    Nan::AsyncQueueWorker(new RemoveWorker(callback,obj->list,stdstr, &(obj->lock)));
+    Nan::AsyncQueueWorker(new RemoveWorker(callback,obj->list,cc_string, &(obj->lock)));
 
     info.GetReturnValue().Set(Nan::Undefined());
 }
