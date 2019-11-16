@@ -1,4 +1,4 @@
-## 0.4.0
+## v0.4.0
 
 ### Add
 
@@ -8,11 +8,11 @@
 
 1. Remove the support for  node 5 and below.
 
-## 0.3.1
+## v0.3.1
 
 1. Fixed the support of node 10.
 
-## 0.3.0
+## v0.3.0
 
 1. Fixed the bug of unsafe thread operation.
 
@@ -21,6 +21,6 @@
 1. Add function remvoe to node addon class
 2. Gcc below 6 can build correctly now
 
-## 0.1.0
+## v0.1.0
 
 1. project init.
