@@ -1,6 +1,12 @@
 ## 0.4.0
 
+### Add
+
 1. Add support for node 12.
+
+### Remove
+
+1. Remove the support for  node 5 and below.
 
 ## 0.3.1
 
