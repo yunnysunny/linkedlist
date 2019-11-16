@@ -1,3 +1,7 @@
+## 0.4.0
+
+1. Add support for node 12.
+
 ## 0.3.1
 
 1. Fixed the support of node 10.
