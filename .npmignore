@@ -1,3 +1,11 @@
 *.sln
 *.vcxproj
 *.vcxproj.filters
+build/
+.github/
+test/
+docs/
+.travis.yml
+.gitignore
+.npmignore
+.vscode/

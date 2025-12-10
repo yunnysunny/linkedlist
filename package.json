@@ -5,7 +5,7 @@
   "main": "node/index.js",
   "scripts": {
     "test": "mocha test/ --timeout 999999",
-    "doc": "doxygen && moxygen --anchors --output doc/cppapi.md doc/xml",
+    "doc": "doxygen && moxygen --anchors --output docs/cppapi.md docs/xml",
     "install": "node-gyp rebuild"
   },
   "repository": {
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/yunnysunny/linkedlist#readme",
   "dependencies": {
-    "nan": "^2.11.1"
+    "nan": "^2.24.0"
   },
   "devDependencies": {
     "async": "^2.6.0",

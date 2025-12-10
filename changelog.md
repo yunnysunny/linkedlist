@@ -1,3 +1,7 @@
+## v0.4.1
+### Improve
+1. Bump `nan` to 2.24.0.
+
 ## v0.4.0
 
 ### Add
