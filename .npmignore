@@ -9,3 +9,6 @@ docs/
 .gitignore
 .npmignore
 .vscode/
+.doclets.yml
+.eslintrc.json
+Doxyfile
