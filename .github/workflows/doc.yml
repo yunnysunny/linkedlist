@@ -1,0 +1,27 @@
+name: Build Docs
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - '**.md'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen
+
+      - name: Build docs
+        run: doxygen Doxyfile
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: linkedlist
+          directory: ./docs
