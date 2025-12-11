@@ -307,3 +307,4 @@ __pycache__/
 *.xsd.cs
 /package-lock.json
 /doc/xml
+/docs
